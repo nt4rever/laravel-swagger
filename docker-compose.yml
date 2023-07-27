@@ -46,6 +46,19 @@ services:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
+    phpmyadmin:
+        image: phpmyadmin
+        ports:
+            - 2807:80
+        networks:
+            - sail
+        depends_on:
+            - mysql
+        environment:
+            PMA_HOST: '${DB_HOST}'
+            PMA_PORT: '${DB_PORT}'
+            PMA_PASSWORD: '${DB_PASSWORD}'
+            PMA_ARBITRARY: 1
     minio:
         image: 'minio/minio:latest'
         ports:
