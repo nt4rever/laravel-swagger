@@ -7,3 +7,9 @@ docker run --rm `
     laravelsail/php82-composer:latest `
     composer install --ignore-platform-reqs
 ```
+
+Run without docker
+
+```bash
+php artisan serve --env=.env.local
+```
