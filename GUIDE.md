@@ -1,15 +1,15 @@
-Run temporary container in Powershell
+How to run it?
 
 ```bash
-docker run --rm `
-    -v "${PWD}:/var/www/html" `
-    -w /var/www/html `
-    laravelsail/php82-composer:latest `
-    composer install --ignore-platform-reqs
+cp .env.example .env
+docker compose config
+docker compose build
+docker compose run --rm laravel sh /var/www/.docker/php/setup.sh
+docker compose up -d
+
 ```
-
-Run without docker
-
+Migrate and seed database:
 ```bash
-php artisan serve --env=.env.local
+docker exec -it <container_name> sh
+php artisan migrate --seed
 ```
