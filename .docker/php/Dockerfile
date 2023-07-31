@@ -8,7 +8,6 @@ RUN apt-get update
 RUN apt-get -y install apt-utils nano wget dialog vim
 
 # Install important libraries
-RUN echo "\e[1;33mInstall important libraries\e[0m"
 RUN apt-get -y install --fix-missing \
     apt-utils \
     build-essential \
@@ -31,7 +30,6 @@ RUN apt-get -y install --fix-missing \
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN echo "\e[1;33mInstall important docker dependencies\e[0m"
 RUN docker-php-ext-install \
     exif \
     pcntl \

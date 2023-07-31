@@ -1,5 +1,5 @@
 #!/bin/sh
-cd /var/www
+# cd /var/www
 
 export COMPOSER_ALLOW_SUPERUSER=1
 
