@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 
@@ -16,9 +14,10 @@ class PandoraTest extends TestCase
     {
         parent::setUp();
         $this->routes = [
-            '/' => '/'
+            '/' => '/',
         ];
     }
+
     /**
      * Home page return success.
      *
@@ -32,13 +31,13 @@ class PandoraTest extends TestCase
                 'status',
                 'laravel_version',
                 'php_version',
-                'pandora_version'
+                'pandora_version',
             ])
             ->assertJson([
                 'status' => 'ok',
                 'laravel_version' => Application::VERSION,
                 'php_version' => PHP_VERSION,
-                'pandora_version' => config('pandora.version')
+                'pandora_version' => config('pandora.version'),
             ]);
     }
 }
