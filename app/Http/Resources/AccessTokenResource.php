@@ -11,9 +11,14 @@ use OpenApi\Attributes as OAT;
     schema: 'AccessTokenResource',
     properties: [
         new OAT\Property(
-            property: 'access_token',
+            property: 'token',
             type: 'string',
             example: '6|JeXDJdhmaQN4Nl3T3DaD9sE20PoPrdUx15W0m2eA'
+        ),
+        new OAT\Property(
+            property: 'expires_at',
+            type: 'datetime',
+            example: '2023-08-09T03:22:18.000000Z'
         ),
         new OAT\Property(
             property: 'type',
@@ -33,7 +38,8 @@ class AccessTokenResource extends JsonResource
     public function toArray($request): array|Arrayable|JsonSerializable
     {
         return [
-            'access_token' => $this->plainTextToken,
+            'token' => $this->plainTextToken,
+            'expires_at' => $this->accessToken->expires_at,
             'type' => 'bearer',
         ];
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\UserSignedUp;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\SignupRequest;
+use App\Http\Resources\AccessTokenResource;
 use App\Http\Resources\LoggedInUserResource;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
@@ -142,5 +143,32 @@ class AuthController extends Controller
         $this->authService->logoutUser($request->user());
 
         return Response::json(null, HttpResponse::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Issue a new access token
+     *
+     * @param  Request  $request
+     * @return JsonResponse
+     */
+    #[OAT\Post(
+        tags: ['auth'],
+        path: '/api/refresh-token',
+        summary: 'Issue a new access token',
+        operationId: 'AuthController.refreshToken',
+        security: [['BearerToken' => []]],
+        responses: [
+            new OAT\Response(
+                response: HttpResponse::HTTP_OK,
+                description: 'Ok',
+                content: new OAT\JsonContent(ref: '#/components/schemas/AccessTokenResource')
+            ),
+        ]
+    )]
+    public function refreshToken(Request $request): JsonResponse
+    {
+        $accessToken = $this->authService->refreshToken($request->user());
+
+        return Response::json(new AccessTokenResource($accessToken));
     }
 }

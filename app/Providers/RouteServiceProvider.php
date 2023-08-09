@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\TokenAbility;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -54,7 +55,7 @@ class RouteServiceProvider extends ServiceProvider
         require base_path('routes/api/auth.php');
 
         Route::group([
-            'middleware' => ['auth:user'],
+            'middleware' => ['auth:user', 'ability:'.TokenAbility::ACCESS_API->value],
         ], function () {
             require base_path('routes/api/profile.php');
         });

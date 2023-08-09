@@ -19,7 +19,8 @@ return [
         '%s%s',
         'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
         Sanctum::currentApplicationUrlWithPort()
-    ))),
+    )
+    )),
 
     /*
     |--------------------------------------------------------------------------
@@ -46,7 +47,19 @@ return [
     |
     */
 
-    'expiration' => null,
+    'expiration' => env('EXPIRATION', 60), // 1 hours
+
+    /*
+    |--------------------------------------------------------------------------
+    | Refresh Token Expiration Minutes
+    |--------------------------------------------------------------------------
+    |
+    | This value controls the number of minutes until an issued token will be
+    | considered expired. If this value is null, personal access tokens do
+    | not expire. This won't tweak the lifetime of first-party sessions.
+    |
+    */
+    'rt_expiration' => env('RT_EXPIRATION', 7 * 24 * 60), // 7 days
 
     /*
     |--------------------------------------------------------------------------

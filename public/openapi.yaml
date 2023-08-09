@@ -145,6 +145,23 @@ paths:
       security:
         -
           BearerToken: []
+  /api/refresh-token:
+    post:
+      tags:
+        - auth
+      summary: 'Issue a new access token'
+      description: 'Issue a new access token'
+      operationId: AuthController.refreshToken
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessTokenResource'
+      security:
+        -
+          BearerToken: []
   /api/profile:
     get:
       tags:
@@ -232,9 +249,13 @@ components:
       type: object
     AccessTokenResource:
       properties:
-        access_token:
+        token:
           type: string
           example: 6|JeXDJdhmaQN4Nl3T3DaD9sE20PoPrdUx15W0m2eA
+        expires_at:
+          type: string
+          format: date-time
+          example: '2023-08-09T03:22:18.000000Z'
         type:
           type: string
           example: bearer
@@ -270,7 +291,9 @@ components:
       properties:
         user:
           $ref: '#/components/schemas/UserResource'
-        token:
+        access_token:
+          $ref: '#/components/schemas/AccessTokenResource'
+        refresh_token:
           $ref: '#/components/schemas/AccessTokenResource'
       type: object
     UserResource:

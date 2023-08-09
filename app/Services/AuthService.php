@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
+use App\Enums\TokenAbility;
 use App\Http\Requests\Auth\AdminLoginRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\SignupRequest;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\NewAccessToken;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -102,5 +104,18 @@ class AuthService
     public function logoutAdmin(Admin $admin): bool
     {
         return $admin->currentAccessToken()->delete();
+    }
+
+    /**
+     * Issue a new access token
+     *
+     * @param  User  $user
+     * @return NewAccessToken
+     */
+    public function refreshToken(User $user): NewAccessToken
+    {
+        $accessToken = $user->createToken('access_token', [TokenAbility::ACCESS_API->value], now()->addMinutes(config('sanctum.expiration')));
+
+        return $accessToken;
     }
 }
