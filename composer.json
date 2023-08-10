@@ -10,6 +10,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "predis/predis": "^2.2",
         "rap2hpoutre/laravel-log-viewer": "^2.2",
         "zircote/swagger-php": "^4.4"
     },
@@ -17,6 +18,7 @@
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.1",
         "laravel/sail": "^1.18",
+        "laravel/telescope": "^4.16",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
@@ -54,7 +56,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "config": {

@@ -7,7 +7,7 @@ composer --no-interaction install
 
 cp .env.example .env
 
-# php artisan telescope:install
+php artisan telescope:install
 
 php artisan key:generate
 php artisan cache:clear
