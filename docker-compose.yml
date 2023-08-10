@@ -20,6 +20,7 @@ services:
             - mysql
             - minio
             - mailhog
+            - redis
     nginx:
         image: nginx:stable
         container_name: nginx
