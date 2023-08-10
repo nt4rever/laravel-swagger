@@ -59,8 +59,9 @@ class AuthTest extends TestCase
                     'avatar_url',
                     'created_at',
                 ],
-                'token' => [
-                    'access_token',
+                'access_token' => [
+                    'token',
+                    'expires_at',
                     'type',
                 ],
             ])

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TokenAbility;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -38,7 +39,7 @@ class ProfileTest extends TestCase
 
         $this->user = User::factory()->create();
 
-        Sanctum::actingAs($this->user, [], 'user');
+        Sanctum::actingAs($this->user, [TokenAbility::ACCESS_API->value], 'user');
     }
 
     /**

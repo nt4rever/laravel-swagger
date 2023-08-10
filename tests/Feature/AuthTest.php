@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\TokenAbility;
 use App\Events\UserSignedUp;
 use App\Http\Resources\LoggedInUserResource;
 use App\Models\User;
@@ -64,8 +65,14 @@ class AuthTest extends TestCase
                     'avatar_url',
                     'created_at',
                 ],
-                'token' => [
-                    'access_token',
+                'access_token' => [
+                    'token',
+                    'expires_at',
+                    'type',
+                ],
+                'refresh_token' => [
+                    'token',
+                    'expires_at',
                     'type',
                 ],
             ])
@@ -152,8 +159,14 @@ class AuthTest extends TestCase
                     'avatar_url',
                     'created_at',
                 ],
-                'token' => [
-                    'access_token',
+                'access_token' => [
+                    'token',
+                    'expires_at',
+                    'type',
+                ],
+                'refresh_token' => [
+                    'token',
+                    'expires_at',
                     'type',
                 ],
             ])
@@ -213,7 +226,7 @@ class AuthTest extends TestCase
      */
     public function testAUserCanLogoutSuccessfully()
     {
-        Sanctum::actingAs(User::factory()->create(), [], 'user');
+        Sanctum::actingAs(User::factory()->create(), [TokenAbility::ACCESS_API->value], 'user');
 
         $this->json('POST', $this->routes['logout'])
             ->assertStatus(Response::HTTP_NO_CONTENT);

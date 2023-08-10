@@ -11,8 +11,16 @@ use OpenApi\Attributes as OAT;
 #[OAT\Schema(
     schema: 'LoggedInAdminResource',
     properties: [
-        new OAT\Property(property: 'admin', type: 'object', ref: '#/components/schemas/AdminResource'),
-        new OAT\Property(property: 'token', type: 'object', ref: '#/components/schemas/AccessTokenResource'),
+        new OAT\Property(
+            property: 'admin',
+            type: 'object',
+            ref: '#/components/schemas/AdminResource'
+        ),
+        new OAT\Property(
+            property: 'token',
+            type: 'object',
+            ref: '#/components/schemas/AccessTokenResource'
+        ),
     ]
 )]
 class LoggedInAdminResource extends JsonResource
@@ -36,11 +44,11 @@ class LoggedInAdminResource extends JsonResource
      */
     public function toArray($request): array|Arrayable|JsonSerializable
     {
-        $token = $this->admin->createToken('admin-auth-token');
+        $token = $this->admin->createToken('admin-auth-token', expiresAt: now()->addMinutes(config('sanctum.expiration')));
 
         return [
             'admin' => new AdminResource($this->admin),
-            'token' => new AccessTokenResource($token),
+            'access_token' => new AccessTokenResource($token),
         ];
     }
 }
