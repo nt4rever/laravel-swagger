@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\TestJob;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
@@ -22,6 +23,8 @@ class PandoraController extends Controller
             $response['php_version'] = PHP_VERSION;
             $response['pandora_version'] = Config::get('pandora.version');
         }
+
+        TestJob::dispatch();
 
         return Response::json($response);
     }
