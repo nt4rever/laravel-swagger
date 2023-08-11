@@ -15,13 +15,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->uuid('uuid')->unique();
+            $table->string('name')->index();
             $table->string('email')->unique();
             $table->boolean('email_verified')->default(false);
             $table->string('password');
             $table->string('firebase_uid')->unique()->nullable();
             $table->string('avatar_url')->nullable();
+            $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
