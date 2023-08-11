@@ -358,6 +358,9 @@ components:
         id:
           type: integer
           example: 1
+        uuid:
+          type: string
+          example: 99dd5781-fc07-4e41-94fd-e69ece858d73
         name:
           type: string
           example: 'John Doe'
