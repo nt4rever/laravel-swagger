@@ -14,6 +14,7 @@ use Illuminate\Support\Collection;
 
 /**
  * Class Note
+ *
  * @property int $id
  * @property string $uuid
  * @property int $user_id
@@ -23,6 +24,7 @@ use Illuminate\Support\Collection;
  * @property Carbon $deleted_at
  * @property User $user
  * @property Collection|NoteContent[] $contents
+ *
  * @mixin EloquentBuilderMixin
  */
 class Note extends Model
@@ -32,12 +34,12 @@ class Note extends Model
     protected $table = 'notes';
 
     protected $casts = [
-        'user_id' => 'int'
+        'user_id' => 'int',
     ];
 
     protected $fillable = [
         'user_id',
-        'title'
+        'title',
     ];
 
     /**

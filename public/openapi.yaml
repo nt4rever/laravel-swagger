@@ -162,6 +162,25 @@ paths:
       security:
         -
           BearerToken: []
+  /api/note:
+    get:
+      tags:
+        - note
+      summary: 'Get a list of notes of User (Pagination applied)'
+      description: 'Get a list of notes of User (Pagination applied)'
+      operationId: NoteController.index
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/WrapPagination' }
+                  - { properties: { data: { type: array, items: { $ref: '#/components/schemas/NoteResource' } } }, type: object }
+      security:
+        -
+          BearerToken: []
   /api/profile:
     get:
       tags:
@@ -181,6 +200,27 @@ paths:
           BearerToken: []
 components:
   schemas:
+    WrapPagination:
+      properties:
+        data:
+          type: array
+          items: {  }
+        total:
+          type: integer
+          example: 100
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 10
+        has_next:
+          type: boolean
+          example: true
+        has_prev:
+          type: boolean
+          example: false
+      type: object
     ValidationError:
       properties:
         message:
@@ -295,6 +335,23 @@ components:
           $ref: '#/components/schemas/AccessTokenResource'
         refresh_token:
           $ref: '#/components/schemas/AccessTokenResource'
+      type: object
+    NoteResource:
+      properties:
+        uuid:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+        title:
+          type: string
+          example: 'Hello World'
+        created_at:
+          type: string
+          format: date-time
+          example: '2022-08-27T16:14:46.000000Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2022-08-27T16:14:46.000000Z'
       type: object
     UserResource:
       properties:

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class NoteContent
+ *
  * @property int $id
  * @property string $uuid
  * @property int $note_id
@@ -27,11 +28,11 @@ class NoteContent extends Model
 
     protected $fillable = [
         'note_id',
-        'content'
+        'content',
     ];
 
     protected $casts = [
-        'note_id' => 'int'
+        'note_id' => 'int',
     ];
 
     /**

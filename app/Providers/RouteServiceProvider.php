@@ -58,6 +58,7 @@ class RouteServiceProvider extends ServiceProvider
             'middleware' => ['auth:user', 'ability:'.TokenAbility::ACCESS_API->value],
         ], function () {
             require base_path('routes/api/profile.php');
+            require base_path('routes/api/note.php');
         });
     }
 
