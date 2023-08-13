@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67ecfbead6fb4682939c2a72f7184f19",
+    "content-hash": "780c5aa115f2c049ed1821d222cbeb12",
     "packages": [
         {
             "name": "brick/math",
@@ -8105,6 +8105,73 @@
                 }
             ],
             "time": "2020-09-28T06:39:44+00:00"
+        },
+        {
+            "name": "sofa/eloquent-testsuite",
+            "version": "1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jarektkaczyk/eloquent-testsuite.git",
+                "reference": "95a6f2d0dda0e1842951ce2062e1af4a018281d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jarektkaczyk/eloquent-testsuite/zipball/95a6f2d0dda0e1842951ce2062e1af4a018281d8",
+                "reference": "95a6f2d0dda0e1842951ce2062e1af4a018281d8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "illuminate/database": ">=5.4",
+                "mockery/mockery": "0.9.*|^1.0",
+                "phpunit/phpunit": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sofa\\EloquentTestsuite\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jarek Tkaczyk",
+                    "email": "jarek@softonsofa.com",
+                    "homepage": "https://softonsofa.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Helpers for fast and reliable UNIT tests for your Eloquent Models with PHPUnit",
+            "keywords": [
+                "database",
+                "eloquent",
+                "laravel",
+                "test",
+                "testing",
+                "unit",
+                "unittest",
+                "unittesting"
+            ],
+            "support": {
+                "issues": "https://github.com/jarektkaczyk/eloquent-testsuite/issues",
+                "source": "https://github.com/jarektkaczyk/eloquent-testsuite"
+            },
+            "funding": [
+                {
+                    "url": "https://softonsofa.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/jarektkaczyk",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-11-29T05:46:29+00:00"
         },
         {
             "name": "spatie/backtrace",
