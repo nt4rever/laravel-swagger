@@ -166,7 +166,8 @@ paths:
     get:
       tags:
         - category
-      summary: 'Get a list of category of User (Pagination applied)'
+      summary: 'Get a list of category of User (Pagination applied).'
+      description: 'Get a list of note category (Pagination applied).'
       operationId: CategoryController.index
       parameters:
         -
@@ -198,9 +199,15 @@ paths:
     post:
       tags:
         - category
-      summary: 'Create a new category of notes'
-      description: 'Create a new category of notes'
+      summary: 'Create a new note category.'
+      description: 'Create a new note category.'
       operationId: CategoryController.store
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryCreateRequest'
       responses:
         '201':
           description: Ok
@@ -221,7 +228,8 @@ paths:
     delete:
       tags:
         - category
-      summary: 'Delete a category of notes'
+      summary: 'Delete a note category.'
+      description: 'Delete a note category.'
       operationId: CategoryController.destroy
       parameters:
         -
@@ -376,9 +384,6 @@ components:
         - user_id
         - name
       properties:
-        user_id:
-          type: integer
-          example: '1'
         name:
           type: string
           example: to-do-list

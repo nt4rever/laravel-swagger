@@ -10,11 +10,6 @@ use OpenApi\Attributes as OAT;
     required: ['user_id', 'name'],
     properties: [
         new OAT\Property(
-            property: 'user_id',
-            type: 'integer',
-            example: '1'
-        ),
-        new OAT\Property(
             property: 'name',
             type: 'string',
             example: 'to-do-list'
@@ -41,7 +36,6 @@ class CategoryCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => ['exists:users,id'],
             'name' => ['required', 'string'],
         ];
     }

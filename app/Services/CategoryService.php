@@ -39,6 +39,6 @@ class CategoryService
      */
     public function storeCategory(array $data): Category
     {
-        return $this->categoryRepository->create($data);
+        return $this->categoryRepository->create($data + ['user_id' => Auth::user()->id]);
     }
 }
