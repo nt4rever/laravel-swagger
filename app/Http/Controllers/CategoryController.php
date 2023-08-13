@@ -6,6 +6,7 @@ use App\Dtos\WrapPagination;
 use App\Http\Requests\Category\CategoryCreateRequest;
 use App\Http\Requests\Category\CategoryDeleteRequest;
 use App\Http\Requests\Category\CategoryIndexRequest;
+use App\Http\Requests\Category\CategoryUpdateRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Services\CategoryService;
@@ -30,7 +31,7 @@ class CategoryController extends Controller
     /**
      * Get a list of note category (Pagination applied).
      *
-     * @param CategoryIndexRequest $request
+     * @param  CategoryIndexRequest  $request
      * @return JsonResponse
      */
     #[OAT\Get(
@@ -83,7 +84,7 @@ class CategoryController extends Controller
             ),
         ]
     )]
-    public function index(CategoryIndexRequest $request) : JsonResponse
+    public function index(CategoryIndexRequest $request): JsonResponse
     {
         $limit = $request->input('limit', config('pagination.limit', 10));
         $data = $this->categoryService->categories($limit);
@@ -105,7 +106,7 @@ class CategoryController extends Controller
         security: [['BearerToken' => []]],
         requestBody: new OAT\RequestBody(
             required: true,
-            content: new OAT\JsonContent(ref: "#/components/schemas/CategoryCreateRequest")
+            content: new OAT\JsonContent(ref: '#/components/schemas/CategoryCreateRequest')
         ),
         responses: [
             new OAT\Response(
@@ -130,9 +131,8 @@ class CategoryController extends Controller
     /**
      * Delete a note category.
      *
-     * @param CategoryDeleteRequest $request
-     * @param Category $category
-     *
+     * @param  CategoryDeleteRequest  $request
+     * @param  Category  $category
      * @return JsonResponse
      */
     #[OAT\Delete(
@@ -172,6 +172,19 @@ class CategoryController extends Controller
                     ]
                 )
             ),
+            new OAT\Response(
+                response: HttpResponse::HTTP_FORBIDDEN,
+                description: 'This action is unauthorized',
+                content: new OAT\JsonContent(
+                    properties: [
+                        new OAT\Property(
+                            property: 'message',
+                            type: 'string',
+                            example: 'This action is unauthorized.'
+                        ),
+                    ]
+                )
+            ),
         ],
     )]
     public function destroy(CategoryDeleteRequest $request, Category $category)
@@ -179,5 +192,76 @@ class CategoryController extends Controller
         $category->delete();
 
         return Response::json([], HttpResponse::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Update a note category.
+     *
+     * @param  CategoryUpdateRequest  $request
+     * @param  Category  $category
+     * @return JsonResponse
+     */
+    #[OAT\Put(
+        tags: ['category'],
+        path: '/api/category/{id}',
+        summary: 'Update a note category.',
+        operationId: 'CategoryController.update',
+        security: [['BearerToken' => []]],
+        parameters: [
+            new OAT\Parameter(
+                required: true,
+                in: 'path',
+                parameter: 'id',
+                name: 'id',
+                schema:
+                new OAT\Schema(
+                    type: 'integer',
+                    default: 1,
+                )
+            ),
+        ],
+        requestBody: new OAT\RequestBody(
+            required:true,
+            content: new OAT\JsonContent(ref: '#/components/schemas/CategoryUpdateRequest')
+        ),
+        responses: [
+            new OAT\Response(
+                response: HttpResponse::HTTP_OK,
+                description: 'Ok',
+                content: new OAT\JsonContent(ref: '#/components/schemas/CategoryResource')
+            ),
+            new OAT\Response(
+                response: HttpResponse::HTTP_NOT_FOUND,
+                description: 'Not found the category',
+                content: new OAT\JsonContent(
+                    properties: [
+                        new OAT\Property(
+                            property: 'message',
+                            type: 'string',
+                            example: 'No query results for model [App\\Models\\Category] 10'
+                        ),
+                    ]
+                )
+            ),
+            new OAT\Response(
+                response: HttpResponse::HTTP_FORBIDDEN,
+                description: 'This action is unauthorized',
+                content: new OAT\JsonContent(
+                    properties: [
+                        new OAT\Property(
+                            property: 'message',
+                            type: 'string',
+                            example: 'This action is unauthorized.'
+                        ),
+                    ]
+                )
+            ),
+        ]
+    )]
+    public function update(CategoryUpdateRequest $request, Category $category): JsonResponse
+    {
+        $this->categoryService->updateCategory($category, $request->validated());
+
+        return Response::json(new CategoryResource($category));
     }
 }

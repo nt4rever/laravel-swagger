@@ -225,6 +225,53 @@ paths:
         -
           BearerToken: []
   '/api/category/{id}':
+    put:
+      tags:
+        - category
+      summary: 'Update a note category.'
+      description: 'Update a note category.'
+      operationId: CategoryController.update
+      parameters:
+        -
+          parameter: id
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            default: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryUpdateRequest'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResource'
+        '404':
+          description: 'Not found the category'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'No query results for model [App\Models\Category] 10' }
+                type: object
+        '403':
+          description: 'This action is unauthorized'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'This action is unauthorized.' }
+                type: object
+      security:
+        -
+          BearerToken: []
     delete:
       tags:
         - category
@@ -250,6 +297,14 @@ paths:
               schema:
                 properties:
                   message: { type: string, example: 'No query results for model [App\Models\Category] 10' }
+                type: object
+        '403':
+          description: 'This action is unauthorized'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'This action is unauthorized.' }
                 type: object
       security:
         -
@@ -382,6 +437,14 @@ components:
     CategoryCreateRequest:
       required:
         - user_id
+        - name
+      properties:
+        name:
+          type: string
+          example: to-do-list
+      type: object
+    CategoryUpdateRequest:
+      required:
         - name
       properties:
         name:

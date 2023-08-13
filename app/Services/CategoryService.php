@@ -21,7 +21,7 @@ class CategoryService
     }
 
     /**
-     * Get categories belongs to current user.
+     * Get all note category belongs to current user.
      *
      * @param  int  $limit
      * @return Category[] | Collection
@@ -32,7 +32,7 @@ class CategoryService
     }
 
     /**
-     * Store a new category.
+     * Store a new note category.
      *
      * @param  array  $data
      * @return Category
@@ -40,5 +40,16 @@ class CategoryService
     public function storeCategory(array $data): Category
     {
         return $this->categoryRepository->create($data + ['user_id' => Auth::user()->id]);
+    }
+
+    /**
+     * Update a note category.
+     *
+     * @param  array  $data
+     * @return bool
+     */
+    public function updateCategory(Category $category, array $data): bool
+    {
+        return $this->categoryRepository->update($category, $data);
     }
 }
