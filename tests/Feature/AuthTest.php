@@ -6,6 +6,7 @@ use App\Enums\TokenAbility;
 use App\Events\UserSignedUp;
 use App\Http\Resources\LoggedInUserResource;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
@@ -46,7 +47,9 @@ class AuthTest extends TestCase
      */
     public function testAUserCanSignupSuccessfully()
     {
+        $initialDispatcher = Event::getFacadeRoot();
         Event::fake();
+        Model::setEventDispatcher($initialDispatcher);
 
         $request = [
             'email' => $this->faker->safeEmail(),
