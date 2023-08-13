@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OAT;
 
 #[OAT\Schema(
-    schema: 'NoteResource',
+    schema: 'CategoryResource',
     properties: [
         new OAT\Property(
             property: 'id',
@@ -19,14 +19,9 @@ use OpenApi\Attributes as OAT;
             example: '550e8400-e29b-41d4-a716-446655440000'
         ),
         new OAT\Property(
-            property: 'category',
-            type: 'string|null',
-            example: 'to-do-list'
-        ),
-        new OAT\Property(
-            property: 'title',
+            property: 'name',
             type: 'string',
-            example: 'Hello World'
+            example: 'to-do-list'
         ),
         new OAT\Property(
             property: 'created_at',
@@ -40,7 +35,7 @@ use OpenApi\Attributes as OAT;
         ),
     ]
 )]
-class NoteResource extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -53,9 +48,7 @@ class NoteResource extends JsonResource
         return [
             'id' => $this->id,
             'uuid' => $this->uuid,
-            'category' => $this->category()->name ?? null,
-            'title' => $this->title,
-            'content' => $this->content,
+            'name' => $this->name,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

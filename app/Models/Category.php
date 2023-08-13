@@ -12,55 +12,41 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Class Note
+ * Class Category
  *
  * @property int $id
  * @property string $uuid
  * @property int $user_id
- * @property string $title
+ * @property string $name
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
  * @property User $user
- * @property Category $category
  *
  * @mixin EloquentBuilderMixin
  */
-class Note extends Model
+class Category extends Model
 {
-    use HasFactory, Notifiable, HasUuid, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, HasUuid;
 
-    protected $table = 'notes';
+    protected $table = 'categories';
 
     protected $casts = [
         'user_id' => 'int',
-        'category_id' => 'int',
     ];
 
     protected $fillable = [
         'user_id',
-        'category_id',
-        'title',
-        'content',
+        'name',
     ];
 
     /**
-     * A note belongs to an User
+     * A category belongs to an User
      *
      * @return BelongsTo
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    /**
-     * A note belongs to an Category
-     *
-     * @return BelongsTo
-     */
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class, 'category_id');
     }
 }

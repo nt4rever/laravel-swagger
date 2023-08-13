@@ -162,6 +162,90 @@ paths:
       security:
         -
           BearerToken: []
+  /api/category:
+    get:
+      tags:
+        - category
+      summary: 'Get a list of category of User (Pagination applied)'
+      operationId: CategoryController.index
+      parameters:
+        -
+          parameter: limit
+          name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+        -
+          parameter: page
+          name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - { $ref: '#/components/schemas/WrapPagination' }
+                  - { properties: { data: { type: array, items: { $ref: '#/components/schemas/CategoryResource' } } }, type: object }
+      security:
+        -
+          BearerToken: []
+    post:
+      tags:
+        - category
+      summary: 'Create a new category of notes'
+      description: 'Create a new category of notes'
+      operationId: CategoryController.store
+      responses:
+        '201':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryResource'
+        '422':
+          description: 'Unprocessable entity'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      security:
+        -
+          BearerToken: []
+  '/api/category/{id}':
+    delete:
+      tags:
+        - category
+      summary: 'Delete a category of notes'
+      operationId: CategoryController.destroy
+      parameters:
+        -
+          parameter: id
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '204':
+          description: 'Delete the category successfully'
+        '404':
+          description: 'Not found the category'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message: { type: string, example: 'No query results for model [App\Models\Category] 10' }
+                type: object
+      security:
+        -
+          BearerToken: []
   /api/note:
     get:
       tags:
@@ -287,6 +371,18 @@ components:
           type: string
           example: '123456'
       type: object
+    CategoryCreateRequest:
+      required:
+        - user_id
+        - name
+      properties:
+        user_id:
+          type: integer
+          example: '1'
+        name:
+          type: string
+          example: to-do-list
+      type: object
     AccessTokenResource:
       properties:
         token:
@@ -320,6 +416,26 @@ components:
           format: date-time
           example: '2022-08-27T16:14:46.000000Z'
       type: object
+    CategoryResource:
+      properties:
+        id:
+          type: integer
+          example: 1
+        uuid:
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+        name:
+          type: string
+          example: to-do-list
+        created_at:
+          type: string
+          format: date-time
+          example: '2022-08-27T16:14:46.000000Z'
+        updated_at:
+          type: string
+          format: date-time
+          example: '2022-08-27T16:14:46.000000Z'
+      type: object
     LoggedInAdminResource:
       properties:
         admin:
@@ -338,9 +454,15 @@ components:
       type: object
     NoteResource:
       properties:
+        id:
+          type: integer
+          example: 1
         uuid:
           type: string
           example: 550e8400-e29b-41d4-a716-446655440000
+        category:
+          type: string|null
+          example: to-do-list
         title:
           type: string
           example: 'Hello World'

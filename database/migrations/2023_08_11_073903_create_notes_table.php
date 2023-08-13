@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->foreignId('user_id')->index();
+            $table->foreignId('category_id')->nullable();
             $table->string('title')->index();
+            $table->longText('content')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
