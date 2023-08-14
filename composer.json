@@ -10,6 +10,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "league/flysystem-aws-s3-v3": "^3.15",
         "predis/predis": "^2.2",
         "rap2hpoutre/laravel-log-viewer": "^2.2",
         "zircote/swagger-php": "^4.4"
