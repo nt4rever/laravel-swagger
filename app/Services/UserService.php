@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Filters\UserFilter;
 use App\Models\User;
 use App\Repositories\UserRepository;
 
@@ -38,5 +39,10 @@ class UserService
     public function getByEmail(string $email): ?User
     {
         return $this->userRepository->get(['email' => $email]);
+    }
+
+    public function draftUser(UserFilter $userFilter)
+    {
+        User::filter($userFilter, ['name']);
     }
 }

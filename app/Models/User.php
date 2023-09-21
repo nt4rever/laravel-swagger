@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Traits\Filterable;
 use App\Services\Traits\HasUuid;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,7 +27,7 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasUuid;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasUuid, Filterable;
 
     /**
      * The attributes that are mass assignable.
